@@ -49,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
   ChatSession? _chat;
 
   final FlutterTts _flutterTts = FlutterTts();
+  final stt.SpeechToText _speech = stt.SpeechToText();
   bool _isListening = false;
 
   @override
