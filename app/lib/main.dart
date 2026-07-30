@@ -44,11 +44,10 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _isLoading = false;
   bool _isSpeaking = false;
   
-  static const String _apiKey = "const String.fromEnvironment("GEMINI_API_KEY")";
+  static const String _apiKey = String.fromEnvironment('GEMINI_API_KEY', defaultValue: '');
   GenerativeModel? _model;
   ChatSession? _chat;
 
-  final stt.SpeechToText _speech = stt.SpeechToText();
   final FlutterTts _flutterTts = FlutterTts();
   bool _isListening = false;
 
@@ -57,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     _initTts();
     _requestMicrophonePermission();
-    if (_apiKey != "const String.fromEnvironment("GEMINI_API_KEY")") {
+    if (_apiKey.isNotEmpty) {
       _model = GenerativeModel(
         model: 'gemini-1.5-flash',
         apiKey: _apiKey,
@@ -135,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       if (_model == null) {
         await Future.delayed(const Duration(seconds: 1));
-        const fallbackText = "API Key set nahi hai! Kripya 'const String.fromEnvironment("GEMINI_API_KEY")' ko apni API Key se replace karein.";
+        const fallbackText = "API Key set nahi hai. Kripya Gemini API Key configure karein."; 
         setState(() {
           _messages.add({"role": "assistant", "content": fallbackText});
         });
